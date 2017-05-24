@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="SKYPE_TOOLBAR" content ="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+	<meta name="format-detection" content="telephone=no">
+	<title>DEMORA.VISION</title>
+	<link rel="icon" href="icon-128.png" sizes="32x32" >
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+<body>	
+<!--MAIN-->
+  <video autoplay loop id="bgvid"><source src="videos/bk1.webmhd.webm" type="video/webm"></video>
+<!--MAIN-->
+
+<!--PAGES-->
+<div class="page1" data-id="1">
+	<div class="cont">
+  		<h1 id="mainhead">Demora Vision</h1><br />
+  		<p>Stream your media library into your own Network Programming</p>
+  		<br /><br /><br /><br />
+  		LOAD YOUR VISION 
+  		<br /><br />
+  		<input id="dir-select" type="file" name="files[]" webkitdirectory directory multiple />
+    	<div class="gotoTV" type="dubmit">
+			Watch<br />
+			<span>&#65516;</span>
+		</div>
+    </div>
+</div>
+
+<div class="page" data-id="2" id="broadcast">
+	<h1><!--Programming--></h1>
+	<div id="message"></div>
+	<video id="tv" controls autoplay></video>
+	<img id="image" alt="" src="" height="100vh" />
+	<br />
+	<div class="controller">
+		<div class="btn" id="prev" data-name="prev">
+			<div class="cont">Prev</div> 
+			<span>&#65516;</span>
+		</div>
+		
+		<div class="btn" id="next" data-name="next">
+			<div class="cont">Next</div> 
+			<span>&#65516;</span>
+		</div>
+		
+		<div class="sliders">
+			<div class="slider">
+				<label>Marathon</label><br />
+				<input id="marathon" type="range" min="0" max="1" step="1" value="0" onchange="printValue('marathon','rangeValue1')" />
+				<p class="rangeValue1">OFF</p>
+			</div>
+			
+			<div class="slider">
+				<label>Commercials</label><br />
+				<input id="commercials" type="range" min="0" max="1" step="1" value="1" onchange="printValue('commercials','rangeValue3')" />
+				<p class="rangeValue3">ON</p>
+			</div>
+			
+			<!--<div class="slider">
+				<label>Broadcasting</label><br />
+				<input id="programtype" type="range" min="0" max="2" step="0" value="2" onchange="printValue('programtype','rangeValue2')" />
+				<p class="rangeValue2">BOTH</p>
+			</div>-->
+			
+		</div>
+		
+	</div>	
+</div>
+
+<div class="page" data-id="3" id="archive">
+	<h1><!--Archive--></h1><br /><br />
+	<div id="myDVfolder"></div>
+</div>
+
+<!--PAGES-->
+
+
+<script type="text/javascript" src="js/jQuery.js"></script>
+<script type="text/javascript" src="js/jsapi.js"></script>
+<script type="text/javascript" src="js/video.js"></script>
+<script type="text/javascript" src="js/color-thief.js"></script>
+<script type="text/javascript" src="js/main.js"></script>				
+</body>
+</html>
+
+
