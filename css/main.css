@@ -32,8 +32,8 @@ html, body{font-family: 'paradise';color:#fff;background-size:cover!important;ba
     -ms-transition: all 0.1s ease-in-out 0.03s;
     -o-transition: all 0.1s ease-in-out 0.03s;
     transition: all 0.1s ease-in-out 0.03s;}
-    
-/*don't animate these*/    
+
+/*don't animate these*/
 .mainItemEnd, .mainItemEnd.active{-webkit-transition: all 0s ease-in-out!important;
     -webkit-transition-delay: 0s!important;
     -moz-transition: all 0s ease-in-out 0s!important;
@@ -43,7 +43,7 @@ html, body{font-family: 'paradise';color:#fff;background-size:cover!important;ba
 .hidden{opacity:0;}.visible{opacity:1;}
 /*MICKEY MOUSE*/
 
-#bgvid {position: fixed;min-width: 100%; min-height: 100%;width: auto; height: auto; z-index: -100;background-size: cover;left:0px;top:0px;}
+#bgvid {margin:0px!important;position: fixed;min-width: 100%; min-height: 100%;width: auto; height: auto; z-index: -100;background-size: cover;left:0px;top:0px;}
 #mainhead{position:relative;z-index: 999;text-align: center;font-size: 70px;}
 #dir-select{opacity:0;z-index:-1;position:absolute;}
 
@@ -66,7 +66,7 @@ html, body{font-family: 'paradise';color:#fff;background-size:cover!important;ba
     height: 70px;
     margin-top: 30px;
 }
-.controller .btn{    
+.controller .btn{
 	text-align: center;
     cursor: pointer;
     position: absolute;
@@ -313,7 +313,7 @@ box-shadow: inset 0px 0px 31px #000000;
 /*main DV parent of all*/
 
 /*main folder parent*/
-.mainFolderInner{background-attachment: fixed!important;color: #fff;cursor: pointer;height:auto;width: calc(100% + 40px);left: calc(50% - 50% - 20px);position: relative;    
+.mainFolderInner{background-attachment: fixed!important;color: #fff;cursor: pointer;height:auto;width: calc(100% + 40px);left: calc(50% - 50% - 20px);position: relative;
 overflow: hidden;
 height: 38px;}
 .mainFolderInnerTitle{font-family:'headline';font-size: 25px;letter-spacing: 3px;padding: 8px 20px;width: calc(100% - 40px);}
@@ -372,7 +372,3 @@ video, input {margin:10px auto -20px auto;display: block;}
 .info {margin: 20px 0;text-align:center;font-family:'headline';font-size: 30px;}
 .error {background-color: red;color: white;}
 /*VIDEO*/
-
-
-
-

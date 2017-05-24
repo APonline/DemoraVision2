@@ -22,6 +22,9 @@ var comm2;
 var comm3;
 var comm4;
 var d1 = new Date ();
+
+var TimeID = [];
+var TimeURL = [];
 init();
 
 
@@ -50,7 +53,6 @@ $('#image').bind('mouseleave', resetCarousel);
 
 /*videoplayer - GOOD*/
 function playArchiveFile(playme,myFile,id,extension) {
-console.log('id: '+ id);
   if(commercialCount>3&&commercialON==1){
     commercialCount=0;
     playCOMM(playme,myFile,id,extension);
@@ -62,23 +64,23 @@ function playIT(playme,myFile,id,extension){
 		commercialCount++;
 		newImg=1;
 		document.getElementById('broadcast').style.display = "block";
-	
+
 		var file = playme;
 		var mytype = extension.substr(extension.length - 3);
 		currMedia = mytype;
-	
+
 		//$('.mainItemEnd.active').css('height','18px');
-	
+
 		//$('.mainItemEnd').parents().css('height','38px');
 		$('.mainItemEnd.active').parents().removeClass('active');
 		$('.mainItemEnd.active').removeClass('active');
 		$('#'+id).addClass('active');
 		$('#'+id).parents().addClass('active');
 		$('#'+id).parents().addClass('active');
-		
+
 		//updates playlist
 		currDVpick = id;
-		
+
 		//load content
 		if(mytype==="MP4"||mytype==="mp4"){
 			var videoNode = document.querySelector('#tv');
@@ -86,7 +88,7 @@ function playIT(playme,myFile,id,extension){
 			var canPlay = videoNode.canPlayType(type);
 			if (canPlay === ''){canPlay = 'no';}
 			var isError = canPlay === 'no';
-	
+
 			document.getElementById('image').style.display = "none";
 			document.getElementById('tv').style.display = "block";
 			document.getElementById('image').src = "";
@@ -95,18 +97,18 @@ function playIT(playme,myFile,id,extension){
 				return
 			}
 			videoNode.src = file;
-		
+
 		}else{
 			document.getElementById('tv').style.display = "none";
 			document.getElementById('tv').src = "";
 			var videoNode = document.querySelector('#image')
-		
+
 			$('#image').animate({opacity:0},400, function(){
 				$('#image').css({'opacity':'0','display':'none'});
 				videoNode.src = file;
 				$('#image').css({'opacity':'0','display':'block'});
 				$('#image').animate({opacity:1},600, function(){
-					if($('#image:hover').length != 0){ 
+					if($('#image:hover').length != 0){
 					}else{
 						newImg=0;
 						setTimeout(fireNext, imageSpeed);
@@ -120,27 +122,27 @@ function playIT(playme,myFile,id,extension){
 		var title = myFile;
 		var message = "NOW PLAYING: " + title;
 		displayMessage(message);
-	
+
 		var myVideoPlayer = document.getElementById('tv');
 		myVideoPlayer.addEventListener('loadedmetadata', function() {
 			var upNextDur = myVideoPlayer.duration;
 			var minutes = Math.floor(upNextDur / 60);
-			
+
 			var d1 = new Date (),
 			d = new Date ( d1 );
 			d.setMinutes ( d1.getMinutes() + minutes );
 			d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
-		
+
 				//up Next playing
 				var nextItem = $.inArray( currDVpick, programType );
 				var upnextTitle = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').children('.mainFolderInnerTitle').html();
-				
+
 				if(upnextTitle==undefined){
 					upnextTitle = $('#'+programType[nextItem + 1]).html();
 				}
-				
+
 				var upNext = "<span><span>COMING UP</span><br/>NEXT @ "+d+" </span> <div class='upNextTitle'>"+ upnextTitle +"</div>";
-				
+
 				//ad upnext image
 				var upnextTitleBK = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').attr('data-bk');
 				$('.upNext').css({"background":"linear-gradient(to right, rgba(0,0,0, .3) 0%, rgba(0,0,0, .7) 50%, rgba(0,0,0, 1) 70%), url('"+upnextTitleBK+"') left 20% / 70% no-repeat","background-color":"rgba(0,0,0, 1)!important"});
@@ -154,18 +156,18 @@ function playCOMM(playme,myFile,id,extension){
 
 	var commCount = Math.floor( (Math.random() * $('.Commercials').children('.mainItemEnd').length) + 2 );
 	var myComm = $('.Commercials').children('.mainItemEnd:nth-child('+commCount+')').attr('data-file');
-	
+
 	var file = myComm;
 	var mytype = myFile.substr(myFile.length - 3);
 	currMedia = mytype;
-	
+
 	//load content
 	var videoNode = document.querySelector('#tv')
 	var type = "video/"+ mytype;
 	var canPlay = videoNode.canPlayType(type)
 	if (canPlay === '') canPlay = 'no'
 	var isError = canPlay === 'no';
-	
+
 	var message = "<br />";
 	displayMessage(message);
 
@@ -179,12 +181,12 @@ function playCOMM(playme,myFile,id,extension){
 	videoNode.src = file;
 	document.querySelector('#tv').removeEventListener('ended', nextPlay, false);
 	document.querySelector('#tv').addEventListener('ended', backToBroadcast, false);
-	
+
 	comm1 = playme;
 	comm2 = myFile;
 	comm3 = id;
 	comm4 = extension;
-	
+
 	animateSet('broadcast');
 }
 
@@ -200,8 +202,8 @@ function backToBroadcast(){
 }
 
 function fireNext(){
-	if(currMedia==="mp4"||currMedia==="MP4"){}else{ 
-		if($('#image:hover').length != 0){ 
+	if(currMedia==="mp4"||currMedia==="MP4"){}else{
+		if($('#image:hover').length != 0){
 		}else{
 			if(newImg==1){}else{
 				$('#next').trigger('click');
@@ -218,20 +220,20 @@ function resetCarousel(){
 function upNext(){
 	//messages
 	var myVideoPlayer = document.getElementById('tv');
-	
-	if(marathonON == 1){	
+
+	if(marathonON == 1){
 		var upNextDur = myVideoPlayer.duration;
 		var minutes = Math.floor(upNextDur / 60);
-			
+
 		var d1 = new Date (),
     	d = new Date ( d1 );
 		d.setMinutes ( d1.getMinutes() + minutes );
-		d = d.toLocaleTimeString().replace(/:\d+ /, ' ');	
-	
+		d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
+
 			//up Next playing
 			var nextItem = $.inArray( currDVpick, programType );
 			var upnextTitle = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').children('.mainFolderInnerTitle').html();
-    		
+
     		if(upnextTitle==undefined){
 				upnextTitle = $('#'+programType[nextItem + 1]).html();
 				var upNextT = ""+upnextTitle;
@@ -239,52 +241,52 @@ function upNext(){
 				var upnextTitleEnd = $('#'+programType[nextItem + 1]).html();
 				var upNextT = "<span style='font-size:40px;'>"+upnextTitle+"</span><br />"+upnextTitleEnd;
 			}
-			
-			
+
+
 			if(upNextT.length > 30){
 				var styleAd = "style='font-size: 45px;letter-spacing: 0px;'";
 			}else{
 				var styleAd = "style='font-size: 80px;letter-spacing: 4px;'";
 			}
-			
+
 			var upNext = "<span><span>COMING UP</span><br/>NEXT @ "+d+" </span> <div class='upNextTitle' "+styleAd+">"+ upNextT +"</div>";
-			
+
 			//ad upnext image
 			var upnextTitleBK = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').attr('data-bk');
 			$('.upNext').css({"background":"linear-gradient(to right, rgba(0,0,0, .3) 0%, rgba(0,0,0, .7) 50%, rgba(0,0,0, 1) 70%), url('"+upnextTitleBK+"') left 20% / 70% no-repeat","background-color":"rgba(0,0,0, 1)!important"});
 
-			displayNextMessage(upNext);	
+			displayNextMessage(upNext);
 	}else{
 		var upNextDur = myVideoPlayer.duration;
 		var minutes = Math.floor(upNextDur / 60);
-			
+
 		var d1 = new Date (),
     	d = new Date ( d1 );
 		d.setMinutes ( d1.getMinutes() + minutes );
 		d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
-		
+
 			//up Next playing
 			var nextItem = $.inArray( currDVpick, programType );
 			var upnextTitle = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').children('.mainFolderInnerTitle').html();
-			
+
 			if(upnextTitle==undefined){
 				upnextTitle = $('#'+programType[nextItem + 1]).html();
 			}
-			
+
 			if(upnextTitle.length > 30){
 				var styleAd = "style='font-size: 45px;letter-spacing: 0px;'";
 			}else{
 				var styleAd = "style='font-size: 80px;letter-spacing: 4px;'";
 			}
-			
+
 			var upNext = "<span><span>COMING UP</span><br/>NEXT @ "+d+" </span> <div class='upNextTitle' "+styleAd+">"+ upnextTitle +"</div>";
-			
+
 			//ad upnext image
 			var upnextTitleBK = $('#'+programType[nextItem + 1]).parents('.mainFolderInner').attr('data-bk');
 			$('.upNext').css({"background":"linear-gradient(to right, rgba(0,0,0, .3) 0%, rgba(0,0,0, .7) 50%, rgba(0,0,0, 1) 70%), url('"+upnextTitleBK+"') left 20% / 70% no-repeat","background-color":"rgba(0,0,0, 1)!important"});
-			
+
 			displayNextMessage(upNext);
-	}	
+	}
 	showProgramm();
 }
 function displayMessage(message, isError) {
@@ -303,12 +305,12 @@ function displayNextMessage(message, isError) {
 //dynamic dir load
 function listArchive(event) {
 	document.getElementById('archive').style.display = "block";
-	
+
 	//cycle through folders
 	var folders = event.target.files;
 	for (var i = 0, f; f = folders[i]; i++) {
 		if(folders[i].type==""){continue}
-		
+
 		//gets root Category
 		var dirs = folders[i].webkitRelativePath;
 		dirs = dirs.split("/");
@@ -319,24 +321,24 @@ function listArchive(event) {
 			}else{
 				var parentFolder = dirs[j - 1];
 			}
-			
+
 			createfolders(parentFolder, folderName);
 		}
-		
+
 		//create folders
 		function createfolders(parentFolder, folderName){
 			//master dir
 			if(myDV === null && parentFolder == folderName){
 				folderName = parentFolder;
 				$('#myDVfolder').html("<h1>" + cleanTitles(parentFolder) + "</h1>");
-				
+
 				var Folder = document.createElement("div");
 				var newFolderTitle = cleanTitles(folderName);
 				Folder.className += "outterFolder";
 				Folder.className += newFolderTitle;
 				Folder.setAttribute("id", "folder"+newFolderTitle);
 				Folder.setAttribute("data-name", "outterFolder");
-				
+
 				if(myDV === null){
 					document.querySelector("#myDVfolder").appendChild(Folder);
 					myDV = newFolderTitle;
@@ -353,12 +355,12 @@ function listArchive(event) {
 				Folder2.setAttribute("id", "folder"+newFolderTitle);
 				Folder2.setAttribute("data-name", "innerFolder");
 				Folder2.innerHTML = cleanTitleName(folderName);
-			
+
 				//main dir category 2nd level
 				if(cleanTitles(parentFolder)==myDV && myDV !== null){
 					if($('#folder'+cleanTitles(folderName)).length <=0){
 						Folder2.className += " mainFolder";
-						
+
 						var Folder2title = document.createElement("div");
 						Folder2title.innerHTML = cleanTitleName(folderName);
 						Folder2.innerHTML = "";
@@ -367,31 +369,31 @@ function listArchive(event) {
 						Folder2title.setAttribute("id", "folderName"+cleanTitles(newFolderTitle));
 						Folder2.setAttribute("data-parent", cleanTitles(folderName));
 						Folder2.className += " folder"+cleanTitles(folderName)+newFolderTitle;
-						
-						var list = document.querySelector('#folder'+myDV); 
+
+						var list = document.querySelector('#folder'+myDV);
 						list.insertBefore(Folder2, list.childNodes[0]);
 						document.querySelector('#folder'+cleanTitles(folderName)).appendChild(Folder2title);
 					}
 				}else{
 				//all inner levels
-				
-					if($('#folder'+cleanTitles(folderName)).length < 1){			
+
+					if($('#folder'+cleanTitles(folderName)).length < 1){
 							Folder2.innerHTML = "";
 							var Folder2title = document.createElement("div");
 							Folder2title.innerHTML = cleanTitleName(folderName);
-										
+
 						if($('#folder'+cleanTitles(parentFolder)).hasClass('mainFolderInner')){
-						
+
 							Folder2.className += " mainFolderInnerEnd";
 							Folder2.setAttribute("data-name", "mainFolderInnerEnd");
 							Folder2title.className += " mainFolderInnerEndTitle";
 							Folder2.setAttribute("data-parent", cleanTitles(parentFolder));
 							Folder2.className += " folder"+cleanTitles(parentFolder)+newFolderTitle;
-							
-							var list = document.querySelector('#folder'+cleanTitles(parentFolder)); 
+
+							var list = document.querySelector('#folder'+cleanTitles(parentFolder));
 							list.insertBefore(Folder2, list.childNodes[0]);
 							document.querySelector('.folder'+cleanTitles(parentFolder)+cleanTitles(folderName)).appendChild(Folder2title);
-							
+
 							$('#folder'+cleanTitles(parentFolder)).prepend($('#folder'+cleanTitles(parentFolder)).find('.mainFolderInnerTitle'));
 						}else if($('#folder'+cleanTitles(parentFolder)).length >= 1){
 							Folder2.className += " mainFolderInner";
@@ -400,20 +402,20 @@ function listArchive(event) {
 							Folder2.className += " folder"+cleanTitles(folderName)+cleanTitles(folderName);
 							Folder2.setAttribute("data-parent", cleanTitles(folderName));
 
-							var list = document.querySelector('#folder'+cleanTitles(parentFolder)); 
-							list.insertBefore(Folder2, list.childNodes[0]);			
+							var list = document.querySelector('#folder'+cleanTitles(parentFolder));
+							list.insertBefore(Folder2, list.childNodes[0]);
 							document.querySelector('#folder'+cleanTitles(folderName)).appendChild(Folder2title);
-							
+
 							$('#folder'+cleanTitles(parentFolder)).prepend($('#folderName'+cleanTitles(parentFolder)));
 						}
 					}
 				}
 			}
-		}	
+		}
 	}
 
-	
-	
+
+
 	//cycle through files
 	var files = event.target.files;
 	for (var i2 = 0, f2; f2 = files[i2]; i2++) {
@@ -423,10 +425,10 @@ function listArchive(event) {
 		allfiles = allfiles.split("/");
 
 		var fileName2 = allfiles[allfiles.length - 1];
-		var parentFolder2 = allfiles[allfiles.length - 2];			
-		
+		var parentFolder2 = allfiles[allfiles.length - 2];
+
 		createfiles(cleanTitles(parentFolder2), fileName2, i2);
-		
+
 		//create files
 		function createfiles(parentFolder2, fileName2, i2){
 			var archiveLink = document.createElement("div");
@@ -436,16 +438,16 @@ function listArchive(event) {
 			archiveLink.className += " mainItemEnd";
 			archiveLink.setAttribute("data-name", "mainItemEnd");
 			var fileTitle = fileName2.substr(0, fileName2.length - 3);
-			archiveLink.innerHTML = cleanTitleName(fileTitle);		
+			archiveLink.innerHTML = cleanTitleName(fileTitle);
 			archiveLink.setAttribute("onclick", "playArchiveFile('"+fileURL+"','"+cleanTitleName(fileTitle)+"','myDV"+i2+"','"+cleanTitleName(fileName2)+"')");
 			archiveLink.setAttribute("id", "myDV"+[i2]);
 			archiveLink.setAttribute("data-file", fileURL);
-			var itemDV = archiveLink.setAttribute("id", "myDV"+[i2]);			
-			
+			var itemDV = archiveLink.setAttribute("id", "myDV"+[i2]);
+
 			var coverCheck = cleanTitles(fileName2).substr(cleanTitles(fileName2).length - 3);
 			if($.inArray(coverCheck, endTypes) != -1&& $('#folder'+parentFolder2).hasClass('mainFolderInner')){
 				var matchFolder = cleanTitles(fileName2).slice(0,cleanTitles(fileName2).length-3);
-				
+
 				if(matchFolder == cleanTitles(parentFolder2)){
 					var r = new FileReader();
 						r.onload = (function(f) {
@@ -461,20 +463,22 @@ function listArchive(event) {
 								fakeimage.setAttribute("id", "myimg"+[i2]);
 								fakeimage.setAttribute("src", dataURL);
 								document.querySelector('body').appendChild(fakeimage);
-								
-								gocolor(fakeimage);
-								imgColors = imgColors.toString();
-								var colors = imgColors.split(",");
-								
-								$('#folder'+parentFolder2).attr('data-bk',dataURL);
-								$('#folder'+parentFolder2).css({"background":"linear-gradient(to right, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 1) 55%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 0) 70%), url('"+dataURL+"') right 50% / 75% no-repeat"});								
-								$('#folder'+parentFolder2).children('.mainFolderInnerTitle').css("background-color","rgba("+colors[0]+","+colors[1]+","+colors[2]+",1)");
-								$('#folder'+parentFolder2).children('.mainFolderInnerEnd:nth-child(odd)').children('.mainFolderInnerEndTitle').css("background","rgba("+parseInt(colors[0] - 30)+","+parseInt(colors[1] - 30)+","+parseInt(colors[2] - 30)+",1)");
-								$('#folder'+parentFolder2).children('.mainFolderInnerEnd:nth-child(even)').children('.mainFolderInnerEndTitle').css("background","rgba("+parseInt(colors[0] - 40)+","+parseInt(colors[1] - 40)+","+parseInt(colors[2] - 40)+",1)");
-								
-								$('#folder'+parentFolder2).children('.mainFolderInnerEnd').children('.mainFolderInner').children('.mainFolderInnerTitle:nth-child(odd)').css("background","rgba("+parseInt(colors[0] - 90)+","+parseInt(colors[1] - 90)+","+parseInt(colors[2] - 90)+",1)");
-								$('#folder'+parentFolder2).children('.mainFolderInnerEnd').children('.mainFolderInner').children('.mainFolderInnerTitle:nth-child(even)').css("background","rgba("+parseInt(colors[0] - 120)+","+parseInt(colors[1] - 120)+","+parseInt(colors[2] - 120)+",1)");
-								$("#myimg"+[i2]).remove();
+
+                setTimeout(function(){
+  								gocolor(fakeimage);
+  								imgColors = imgColors.toString();
+  								var colors = imgColors.split(",");
+
+  								$('#folder'+parentFolder2).attr('data-bk',dataURL);
+  								$('#folder'+parentFolder2).css({"background":"linear-gradient(to right, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 1) 55%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 0) 70%), url('"+dataURL+"') right 50% / 75% no-repeat"});
+  								$('#folder'+parentFolder2).children('.mainFolderInnerTitle').css("background-color","rgba("+colors[0]+","+colors[1]+","+colors[2]+",1)");
+  								$('#folder'+parentFolder2).children('.mainFolderInnerEnd:nth-child(odd)').children('.mainFolderInnerEndTitle').css("background","rgba("+parseInt(colors[0] - 30)+","+parseInt(colors[1] - 30)+","+parseInt(colors[2] - 30)+",1)");
+  								$('#folder'+parentFolder2).children('.mainFolderInnerEnd:nth-child(even)').children('.mainFolderInnerEndTitle').css("background","rgba("+parseInt(colors[0] - 40)+","+parseInt(colors[1] - 40)+","+parseInt(colors[2] - 40)+",1)");
+
+  								$('#folder'+parentFolder2).children('.mainFolderInnerEnd').children('.mainFolderInner').children('.mainFolderInnerTitle:nth-child(odd)').css("background","rgba("+parseInt(colors[0] - 90)+","+parseInt(colors[1] - 90)+","+parseInt(colors[2] - 90)+",1)");
+  								$('#folder'+parentFolder2).children('.mainFolderInnerEnd').children('.mainFolderInner').children('.mainFolderInnerTitle:nth-child(even)').css("background","rgba("+parseInt(colors[0] - 120)+","+parseInt(colors[1] - 120)+","+parseInt(colors[2] - 120)+",1)");
+  								$("#myimg"+[i2]).remove();
+                },200);
 							};
 						})(f);
 						r.readAsDataURL(files[i2]);
@@ -483,18 +487,18 @@ function listArchive(event) {
 				//gets master logo
 				var Logo = document.createElement("div");
 				Logo.className += "broadcastLogo";
-				Logo.setAttribute("id", "broadcastLogo");	
-				
+				Logo.setAttribute("id", "broadcastLogo");
+
 				var LogoSML = document.createElement("div");
 				LogoSML.className += "broadcastLogoSML";
 				if($("#myDVfolder h1").length!=0){
 					document.querySelector("#myDVfolder h1").remove();
 				}
 					var sp2 = document.getElementById("myDVfolder");
-					var parentDiv = sp2.parentNode;					
+					var parentDiv = sp2.parentNode;
 					parentDiv.insertBefore(Logo,sp2);
 					document.querySelector("#myDVfolder").appendChild(LogoSML);
-					
+
 					var r = new FileReader();
 						r.onload = (function(f) {
 							return function(e) {
@@ -509,55 +513,41 @@ function listArchive(event) {
 								fakeimage.setAttribute("id", "myimg"+[i2]);
 								fakeimage.setAttribute("src", dataURL);
 								document.querySelector('body').appendChild(fakeimage);
-								
+
+                setTimeout(function(){
 								gocolor(fakeimage);
-								imgColors = imgColors.toString();
-								var colors = imgColors.split(",");
-								mainLogo = dataURL;
-								$('body').css({"background":"linear-gradient(-135deg, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", .8) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", .6) 50%, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", .8) 100%), url('"+dataURL+"') right 50% / 75% no-repeat"});								
-								$('.broadcastLogo').css({"background":"url('"+dataURL+"') right 50% / 75% no-repeat, linear-gradient(to right, rgba("+parseInt(colors[0])+","+parseInt(colors[1])+","+parseInt(colors[2])+", 1) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 1) 50%, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1) 100%)","background-color":"rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1)!important"});
-								$('.broadcastLogoSML').css({"background":"url('"+dataURL+"') right 50% / 75% no-repeat","background-color":"transparent"});
-								
-								$("#bgvid").animate({opacity:0},300, function(){$("#bgvid").css('display','none');});
-								$("#myimg"+[i2]).remove();
+  								imgColors = imgColors.toString();
+  								var colors = imgColors.split(",");
+  								mainLogo = dataURL;
+  								$('body').css({"background":"linear-gradient(-135deg, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", .8) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", .6) 50%, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", .8) 100%), url('"+dataURL+"') right 50% / 75% no-repeat"});
+  								$('.broadcastLogo').css({"background":"url('"+dataURL+"') right 50% / 75% no-repeat, linear-gradient(to right, rgba("+parseInt(colors[0])+","+parseInt(colors[1])+","+parseInt(colors[2])+", 1) 0%, rgba("+colors[0]+","+colors[1]+","+colors[2]+", 1) 50%, rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1) 100%)","background-color":"rgba("+parseInt(colors[0] - 70)+","+parseInt(colors[1] - 70)+","+parseInt(colors[2] - 70)+", 1)!important"});
+  								$('.broadcastLogoSML').css({"background":"url('"+dataURL+"') right 50% / 75% no-repeat","background-color":"transparent"});
+
+  								$("#bgvid").animate({opacity:0},300, function(){$("#bgvid").css('display','none');});
+  								$("#myimg"+[i2]).remove();
+                },200);
 							};
 						})(f);
-						r.readAsDataURL(files[i2]);	
-								
+						r.readAsDataURL(files[i2]);
+
 						//Creates coming up next
 						var upNext = document.createElement("div");
 						upNext.className += "upNext";
 						upNext.setAttribute("id", "upNext");
 						document.querySelector("#broadcastLogo").appendChild(upNext);
-										
+
 			}else{
 				var fileCheck = cleanTitles(fileName2).substr(cleanTitles(fileName2).length - 3);
 				if($.inArray(fileCheck, endfileTypes) != -1){
-					
+
 					if(parentFolder2!="Commercials"){
 						bigDV.push("myDV"+i2);
-						bigDVmarathon.push("myDV"+i2);	
-						
-						//GET TIMES OF FILES
-						/*var videoCheck = document.createElement("video");
-						videoCheck.className += "vidDurTest";
-						videoCheck.setAttribute("id", "vidmyDV"+[i2]);
-						videoCheck.setAttribute("preload", "metadata");
-						document.querySelector('.controller').appendChild(videoCheck);
-						$("#vidmyDV"+[i2]).attr('src',fileURL);
-						
-							var $el = $("#vidmyDV"+[i2]);
-							$el.one('loadedmetadata', function () {
-								
-								var thisDur = $el[0].duration;
-								var minutes = Math.floor(thisDur / 60);
-							
-								$("#myDV"+[i2]).attr("data-dur", minutes);
-								$("#vidmyDV"+[i2]).remove();
-							});	*/
-													
+						bigDVmarathon.push("myDV"+i2);
+
+            TimeID.push(i2);
+            TimeURL.push(fileURL);
 					}
-					
+
 					var parentRoot = $('#folder'+parentFolder2).attr('data-parent');
 					document.querySelector('.folder'+parentRoot+parentFolder2).appendChild(archiveLink);
 				}
@@ -566,6 +556,35 @@ function listArchive(event) {
 	}
 	startWatch();
 }
+function getTimes(){
+  /*var i=0;
+  jQuery(TimeID).each(function(index,value) {
+      var self=this;
+      setTimeout(function() {
+              $("#"+value).addClass('active');
+
+              var videoCheck = document.createElement("video");
+              videoCheck.className += "vidDurTest";
+              videoCheck.setAttribute("id", "vidmyDV"+value);
+              videoCheck.setAttribute("preload", "metadata");
+              document.querySelector('.controller').appendChild(videoCheck);
+              $("#vidmyDV"+value).attr('src',TimeURL[index]);
+              console.log(value, $("#vidmyDV"+value), TimeURL[index]);
+              var $el = $("#vidmyDV"+value);
+              $el.one('loadedmetadata', function () {
+
+                var thisDur = $el[0].duration;
+                var minutes = Math.floor(thisDur / 60);
+
+                $("#myDV"+value).attr("data-dur", minutes);
+                //$("#vidmyDV"+value).remove();
+              });
+      }, 400*i);
+      //i++;
+  });
+  */
+}
+
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -584,10 +603,9 @@ function shuffle(array) {
 
   return array;
 }
-function nextPlay(){	
+function nextPlay(){
 	event.preventDefault();
 	var nextItem = $.inArray( currDVpick, programType );
-	console.log(nextItem);
 	$('#'+programType[nextItem + 1]).trigger('click');
 }
 
@@ -597,19 +615,19 @@ function createProgramm(){
 		progSchedule.className += "progSchedule";
 		progSchedule.setAttribute("id", "progSchedule");
 		document.querySelector("#broadcastLogo").appendChild(progSchedule);
-	
+
 		var showProgShedule = document.createElement("div");
 		showProgShedule.className += "showProgSchedule";
 		showProgShedule.setAttribute("id", "showProgSchedule");
 		document.querySelector("#progSchedule").appendChild(showProgShedule);
 		showProgShedule.innerHTML = "SHOW SCHEDULE";
 		$('#showProgSchedule').bind('click', openProgramm);
-	
+
 		//schedule
 		var progScheduleFrame = document.createElement("div");
 		progScheduleFrame.className += "progScheduleFrame";
 		document.querySelector("#progSchedule").appendChild(progScheduleFrame);
-		
+
 		var progScheduleInner = document.createElement("ul");
 		progScheduleInner.className += "progScheduleInner";
 		document.querySelector(".progScheduleFrame").appendChild(progScheduleInner);
@@ -618,9 +636,9 @@ function createProgramm(){
 }
 function showProgramm(){
 	$('.progScheduleInner').html('');
-	
+
 	var nextItem = $.inArray( currDVpick, programType );
-	
+
 	var lastminSet = 0;
 	for(var i=nextItem; i<programType.length; i++){
 		var progSheduleInnerItem = document.createElement("li");
@@ -629,10 +647,11 @@ function showProgramm(){
 		var title = $('#'+programType[i]).parents('.mainFolderInner').children('.mainFolderInnerTitle').html();
 		if(title==undefined){
 			shedName = progSheduleInnerItem.innerHTML = cleanTitleName($('#'+programType[i]).html());
-		}	
+		}
 
-		var shedTime = $('#'+programType[i]).attr('data-dur');
-		
+		//var shedTime = $('#'+programType[i]).attr('data-dur');
+    var shedTime = 22;
+
 		var d = new Date ( d1 );
 		if(lastminSet==0){
 			d.setMinutes ( d1.getMinutes() );
@@ -643,7 +662,7 @@ function showProgramm(){
 			d.setMinutes ( d1.getMinutes() + lastminSet + parseInt(shedTime) );
 			lastminSet = (lastminSet + parseInt(shedTime));
 		}
-		
+
 		d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 		console.log('last:'+lastminSet,'thisT:'+d,'mins:'+shedTime)
 
@@ -672,10 +691,10 @@ function cleanTitles(title){
 	title = title.replace(/\%20/gi, ' ');
 	title = title.replace(/\%7E/gi, ' ');
 	title = title.replace(/\%2D/gi, ' ');
-	
+
 	return title;
 }
-function cleanTitleName(title){	
+function cleanTitleName(title){
 	if(title){
 		if(title.indexOf(' ') >= 0){
 			//title = title.replace(/\ /g, '-');
@@ -686,7 +705,7 @@ function cleanTitleName(title){
 		title = title.replace(/\./g, '');
 		title = title.replace(/\%20/g, ' ');
 		title = title.replace(/\%7E/g, ' ');
-	
+
 		return title;
 	}
 }
@@ -746,7 +765,7 @@ function printValue(slider,sliderTitle){
 			}
 			break;
 	}
-	
+
 	$('#'+slider).blur();
 	$('.'+sliderTitle).html(newText);
 }
@@ -765,8 +784,8 @@ function onKeyControl(event){
 function controller(){
 	var nextItem = $.inArray( currDVpick, programType );
 	var direction = $(this).attr('data-name');
-		
-	var playme;	
+
+	var playme;
 	if(direction=="prev"){
 		playme = nextItem - 1;
 	}else{
@@ -775,7 +794,8 @@ function controller(){
 	$("#" + programType[playme] + "").trigger("click");
 }
 
-function startWatch(){	
+function startWatch(){
+  getTimes();
 	document.querySelector('.page1').style.display = "none";
 	shuffle(bigDV);
 	programType = [];
@@ -783,11 +803,10 @@ function startWatch(){
 	var item = programType[0];
 	$('#'+item).trigger('click');
 	addArchiveBinds();
-} 
+}
 
 function openArchive(){
 	var id = $(this).attr('id');
-console.log(id);
  	if($('#'+id).hasClass('active')){
 		$('#'+id).removeClass('active');
 	}else{
@@ -805,7 +824,7 @@ function animateSet(spot){
 	animate(document.body, "scrollTop", "", document.body.scrollTop, scrollTarget, 600, true);
 }
 function animate(elem,style,unit,from,to,time,prop) {
-var w = window.innerWidth;
+    var w = window.innerWidth;
     if( !elem) return;
     var start = new Date().getTime(),
         timer = setInterval(function() {
@@ -815,7 +834,7 @@ var w = window.innerWidth;
             } else {
                 elem.style[style] = (from+step*(to-from))+unit;
             }
-            if( step == 1){ 
+            if( step == 1){
             	clearInterval(timer);
             }
         },25);
